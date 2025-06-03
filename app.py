@@ -36,9 +36,7 @@ app = FastAPI()
 def talk(audio: tuple[int, np.ndarray]):
     print(f"{audio[1][:10]=}")
     prompt = stt_model.stt(audio)
-    wav = (tts_model.generate(
-        prompt, audio_prompt_path="audio.wav").numpy() * 32767).astype(np.int16)
-    # wav = wav.round().astype(np.int16)
+    wav = tts_model.generate(prompt, audio_prompt_path="audio.wav").numpy()
 
     print(f"{wav[:10]=}")
     yield tts_model.sr, wav
